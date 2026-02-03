@@ -879,7 +879,10 @@ async function VisualPDE(url) {
   // Listen for dark-mode changes in local storage.
   window.addEventListener("storage", function (e) {
     if (e.key == "dark-mode") {
-      toggleDarkMode(e.newValue == "true", true);
+      // If the event fires because dark-mode was removed, do nothing.
+      if (e.newValue == null) return;
+      // Otherwise, update the mode (without saving again to prevent loops).
+      toggleDarkMode(e.newValue == "true", false);
     }
   });
 
@@ -9959,8 +9962,9 @@ async function VisualPDE(url) {
 
   function updateControllerWithValue(controller, value) {
     if (controller != undefined) {
-      // If there's a slider, update its value and trigger the update via the slider's input event.
-      if (controller.slider != undefined) {
+      // If there's a slider and the value does not contain a parameter-dependent expression, update its value and trigger the update via the slider's input event.
+      const paramDependent = /[^0-9\._\s]/.test(value.toString());
+      if (controller.slider != undefined && !paramDependent) {
         controller.slider.value = value;
         controller.slider.dispatchEvent(new Event("input"));
       } else {

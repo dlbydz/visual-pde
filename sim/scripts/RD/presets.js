@@ -2,6 +2,50 @@
 
 let presets = {};
 
+presets["bistableSurvivalDumbbell"] = {
+  brushRadius: "1",
+  colourbar: true,
+  colourmap: "turbo",
+  domainIndicatorFun:
+    "(x > L_x/5 || x < -L_x/5) && (y < L_y/4 && y > -L_y/4) || (-L_x/3 < x && x < L_x/3 && y < h && y > -h)",
+  domainViaIndicatorFun: true,
+  initCond_1: "2*x/L_x",
+  kineticParams: "a = 0.35 in [0, 1];D = 1 in [0, 2];h = 1.00 in [1, 50];",
+  minX: "-L_x/2",
+  minY: "-L_y/2",
+  parent: "bistableSurvival",
+  probeFun: "u",
+  probeLength: 150,
+  speciesNames: "u",
+  squareCanvas: true,
+  simTitle: "Bistable survival in a dumbbell domain",
+  preset: "bistableSurvivalDumbbell",
+};
+
+presets["harsh1D"] = {
+  boundaryConditions_1: "dirichlet",
+  brushRadius: "2",
+  brushType: "vline",
+  diffusionStr_1_1: "D",
+  dimension: "1",
+  dt: 0.00005,
+  guiUpdatePeriod: 3,
+  initCond_1: "0.1+0.01*RANDN",
+  kineticParams: "K = 1;r = 1;D = 0.6 in [0.1, 15];",
+  minColourValue: "-0.5",
+  numTimestepsPerFrame: 784,
+  overlay: true,
+  overlayExpr: "-D*u_x",
+  parent: "harshEnvironment",
+  plotType: "line",
+  preset: "harsh1D",
+  probeFun: "u",
+  probeLength: 3.0000000000000004,
+  setSeed: true,
+  speciesNames: "u",
+  tryClickingText: "Try tapping!",
+};
+
 presets["Polar diffusion"] = {
   boundaryConditions_1: "combo",
   brushRadius:
@@ -3310,11 +3354,11 @@ presets["bacteriaInAReach2DIllustrated"] = {
   flippedColourmap: false,
   imagePathOne: "./images/river_illustrated.webp",
   kineticParams:
-    "c0 = 0.5 in [0, 1];c1 = 0 in [0, 1];k = 0.006 in [0, 0.05];u = 1 in [0.1, 4];",
+    "c0 = 0.75 in [0, 1];c1 = 0 in [0, 1];k = 0.006 in [0, 0.05];u = 1 in [0.1, 4];b = 0;s=0;o=0;w=0;",
   parent: "bacteriaInAReach2D",
   preset: "bacteriaInAReach2DIllustrated",
   reactionStr_1:
-    "-u*C_xb/sqrt(1 + 0.11*0.93*2*pi*L_y/L_x*cos(0.93*2*pi*x/L_x + 1.01)^2) + u*C_y*0.11*0.93*2*pi*L_y/L_x*cos(0.93*2*pi*x/L_x + 1.01)/sqrt(1 + 0.11*0.93*2*pi*L_y/L_x*cos(0.93*2*pi*x/L_x + 1.01)^2) - k*C + (1-c0)*0.1*Bump(0.1*L_x,0.365*L_y,L/20)/u + c1*0.1*Bump(0.64*L_x,0.68*L_y,0.1*L)/u",
+    "-u*C_xb/sqrt(1 + 0.11*0.93*2*pi*L_y/L_x*cos(0.93*2*pi*x/L_x + 1.01)^2) + u*C_y*0.11*0.93*2*pi*L_y/L_x*cos(0.93*2*pi*x/L_x + 1.01)/sqrt(1 + 0.11*0.93*2*pi*L_y/L_x*cos(0.93*2*pi*x/L_x + 1.01)^2) - k*C + (1-c0)*0.1*Bump(0.1*L_x,0.365*L_y,L/20)/u + c1*0.1*Bump(0.64*L_x,0.68*L_y,0.1*L)/u + 0.001*(w+(1-s)-o)*u^2",
   maxColourValue: "1",
   views: [
     {
